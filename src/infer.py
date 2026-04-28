@@ -47,7 +47,7 @@ def main(settings_path: str) -> None:
 
     print(new_data)
 
-    normalized_data = normalizer.normalize(new_data)
+    normalized_data = normalizer.transform(new_data)
 
     print(normalized_data)
 
@@ -62,7 +62,7 @@ def main(settings_path: str) -> None:
 
     print(predicted)
 
-    natural_prediction = normalizer.denormalize(predicted)
+    natural_prediction = normalizer.inverse_transform(predicted)
 
     print(natural_prediction)
 

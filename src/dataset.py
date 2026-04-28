@@ -81,7 +81,7 @@ class DatasetNormalizer:
             settings, numeric_scaler, categorical_encoder, ordinal_encoder
         )
 
-    def normalize(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, dataset: pd.DataFrame) -> pd.DataFrame:
         numeric_data_transformed = self._numeric_scaler.transform(
             dataset[self._settings.dataset.numeric_columns]
         )
@@ -100,7 +100,7 @@ class DatasetNormalizer:
 
         return dataset_transformed
 
-    def denormalize(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def inverse_transform(self, dataset: pd.DataFrame) -> pd.DataFrame:
         numeric_data_inverse_transformed = self._numeric_scaler.inverse_transform(
             dataset[self._settings.dataset.numeric_columns]
         )

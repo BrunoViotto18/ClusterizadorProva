@@ -22,12 +22,14 @@ def main(settings_path: str) -> None:
 
     normalizer = DatasetNormalizer.load(settings)
 
-    normalized_centers = pd.DataFrame(cluster_model.cluster_centers_, columns=normalizer.normalized_columns)
+    normalized_centers = pd.DataFrame(
+        cluster_model.cluster_centers_, columns=normalizer.normalized_columns
+    )
 
     print("Centros normalizados")
     print(normalized_centers)
 
-    natural_centers = normalizer.denormalize(normalized_centers)
+    natural_centers = normalizer.inverse_transform(normalized_centers)
 
     print("Centros naturais")
     print(natural_centers)

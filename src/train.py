@@ -79,7 +79,7 @@ def main(settings_path: str) -> None:
 
     dataset_normalizer = DatasetNormalizer.fit_save(settings, dataset)
 
-    dataset_normalized = dataset_normalizer.normalize(dataset)
+    dataset_normalized = dataset_normalizer.transform(dataset)
 
     ideal_cluster_count = calculate_ideal_cluster_count(
         dataset_normalized, settings.random_seed
