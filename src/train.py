@@ -16,6 +16,7 @@ def calculate_ideal_cluster_count(dataset: pd.DataFrame, random_seed: int):
     distortions = []
     K = range(1, dataset.shape[0])
     for k in K:
+        print(f"Measuring cluser {k}/{len(K)}")
         cluster_model = KMeans(n_clusters=k, random_state=random_seed)
 
         cluster_model = cluster_model.fit(dataset)
@@ -80,7 +81,7 @@ def main(settings_path: str) -> None:
 
     print(dataset.head())
 
-    meta = DatasetMetadata(columns=settings.dataset.columns)
+    meta = DatasetMetadata(columns=settings.dataset.columns, transformed_columns=[])
 
     dataset_normalizer = DatasetTransformer.fit_save(
         settings.normalizer.file_path, dataset, meta

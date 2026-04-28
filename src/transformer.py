@@ -231,8 +231,6 @@ class DatasetTransformer(Transfomer):
                 fill = dataset[column.name].median()
             elif column.type == ColumnType.CATEGORICAL:
                 fill = dataset[column.name].mode()[0]
-            elif column.type == ColumnType.CATEGORICAL:
-                fill = dataset[column.name].mode()[0]
             elif column.type == ColumnType.ORDINAL:
                 fill = dataset[column.name].mode()[0]
             else:
@@ -262,6 +260,11 @@ class DatasetTransformer(Transfomer):
             meta,
         )
 
+        meta.transformed_columns = [
+            *meta.numeric_columns,
+            *onehot_transformer.transform_columns(meta.categorical_columns),
+            *meta.ordinal_columns,
+        ]
         normalizer_meta = DatasetTransformerMetadata(dataset=meta)
         with open(path, "w") as f:
             json.dump(normalizer_meta.model_dump(mode="json"), f)
@@ -304,7 +307,7 @@ class DatasetTransformer(Transfomer):
 
     @property
     def transformed_columns(self):
-        return self.transform_columns(self.original_columns)
+        return self._meta.dataset.transformed_columns
 
     def transform(self, dataset: pd.DataFrame) -> pd.DataFrame:
         for column in self._meta.dataset.columns:
@@ -355,6 +358,7 @@ class DatasetTransformer(Transfomer):
     @override
     def transform_column(self, column: str) -> list[str]:
         # try:
-            return self._onehot_transformer.transform_column(column)
-        # except Exception:
-        #     return [column]
+        return self._onehot_transformer.transform_column(column)
+
+    # except Exception:
+    #     return [column]

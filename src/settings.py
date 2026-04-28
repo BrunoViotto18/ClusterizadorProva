@@ -96,7 +96,7 @@ class ClusterizerSettings(BaseModel):
 class ColumnInfo(BaseModel):
     name: str
     type: ColumnType
-    fill: float | None = None
+    fill: float | str | None = None
 
 
 class ColumnType(Enum):
@@ -120,6 +120,7 @@ class DatasetTransformerMetadata(BaseModel):
 
 class DatasetMetadata(BaseModel):
     columns: list[ColumnInfo]
+    transformed_columns: list[str]
 
     @property
     def numeric_columns(self):
