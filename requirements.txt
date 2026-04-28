@@ -1,0 +1,8 @@
+pydantic
+kagglehub
+pandas
+matplotlib
+scikit-learn
+
+# Matplotlib visualization on Linux
+PyQt6

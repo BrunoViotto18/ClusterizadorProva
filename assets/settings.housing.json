@@ -1,0 +1,53 @@
+{
+  "random_seed": 42,
+  "dataset": {
+    "kaggle_key": "vikrishnan/boston-house-prices",
+    "path": ["datasets"],
+    "file_name": "housing.csv",
+    "delimiter": "\\s+",
+    "numeric_columns": [
+      "CRIM",
+      "ZN",
+      "INDUS",
+      "NOX",
+      "RM",
+      "AGE",
+      "DIS",
+      "TAX",
+      "PTRATIO",
+      "B",
+      "LSTAT",
+      "MEDV"
+    ],
+    "categorical_columns": [
+      "CHAS"
+    ],
+    "ordinal_columns": [
+      "RAD"
+    ],
+    "columns": [
+      "CRIM",
+      "ZN",
+      "INDUS",
+      "CHAS",
+      "NOX",
+      "RM",
+      "AGE",
+      "DIS",
+      "RAD",
+      "TAX",
+      "PTRATIO",
+      "B",
+      "LSTAT",
+      "MEDV"
+  ]
+  },
+  "normalizer": {
+    "path": ["models"],
+    "file_name": "normalizer.pkl"
+  },
+  "clusterizer": {
+    "path": ["models"],
+    "file_name": "model.pkl"
+  }
+}
