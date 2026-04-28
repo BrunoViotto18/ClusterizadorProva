@@ -22,7 +22,6 @@ class AppSettings(BaseModel):
 
 
 class DatasetSettings(BaseModel):
-    kaggle_key: str
     _path: list[str] = PrivateAttr(default=[])
     file_name: str
     delimiter: str

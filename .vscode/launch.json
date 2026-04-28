@@ -9,7 +9,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/train.py",
-      "args": ["assets/settings.housing.json"],
+      "args": ["assets/settings.obesety.json"],
       "console": "integratedTerminal"
     },
     {
@@ -17,7 +17,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/view.py",
-      "args": ["assets/settings.housing.json"],
+      "args": ["assets/settings.obesety.json"],
       "console": "integratedTerminal"
     },
     {
@@ -25,7 +25,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/src/infer.py",
-      "args": ["assets/settings.housing.json"],
+      "args": ["assets/settings.obesety.json"],
       "console": "integratedTerminal"
     }
   ]

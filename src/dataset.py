@@ -7,9 +7,7 @@ from pydantic import BaseModel
 from settings import DatasetSettings
 
 
-def download_dataset(settings: DatasetSettings) -> pd.DataFrame:
-    _ = kagglehub.dataset_download(settings.kaggle_key, output_dir=settings.path)
-
+def load_dataset(settings: DatasetSettings) -> pd.DataFrame:
     dataset = pd.read_csv(
         settings.file_path,
         header=None,

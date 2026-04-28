@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from dataset import download_dataset
+from dataset import load_dataset
 from transformer import DatasetTransformer
 from scipy.spatial.distance import cdist
 from settings import AppSettings, DatasetMetadata, DatasetSettings
@@ -76,7 +76,9 @@ def save_cluster_model(file_path: str, cluster_model: KMeans):
 def main(settings_path: str) -> None:
     settings = AppSettings.load_json(settings_path)
 
-    dataset = download_dataset(settings.dataset)
+    dataset = load_dataset(settings.dataset)
+
+    print(dataset.head())
 
     meta = DatasetMetadata(columns=settings.dataset.columns)
 

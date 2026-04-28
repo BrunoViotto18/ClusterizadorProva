@@ -1,5 +1,6 @@
 import json
 import os
+import numpy as np
 import pandas as pd
 import pickle
 
@@ -10,7 +11,12 @@ from settings import (
     DatasetMetadata,
     DatasetTransformerMetadata,
 )
-from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, OrdinalEncoder
+from sklearn.preprocessing import (
+    LabelEncoder,
+    MinMaxScaler,
+    OneHotEncoder,
+    OrdinalEncoder,
+)
 from typing import Any, override
 
 
@@ -146,7 +152,7 @@ class OneHotTransformer(Transfomer):
 
     @override
     def transform_column(self, column: str) -> list[str]:
-        return [*self._scaler.get_feature_names_out([column])]
+        return [*self._scaler.get_feature_names_out()]
 
 
 class OrdinalTransformer(Transfomer):
@@ -195,6 +201,7 @@ class OrdinalTransformer(Transfomer):
 
 
 class DatasetTransformer(Transfomer):
+
     def __init__(
         self,
         meta: DatasetTransformerMetadata,
@@ -218,9 +225,14 @@ class DatasetTransformer(Transfomer):
         for column in meta.columns:
             fill: float
             if column.type == ColumnType.NUMERIC:
+                dataset[column.name] = pd.to_numeric(
+                    dataset[column.name], errors="coerce"
+                )
                 fill = dataset[column.name].median()
             elif column.type == ColumnType.CATEGORICAL:
-                fill = dataset[column.name].median()
+                fill = dataset[column.name].mode()[0]
+            elif column.type == ColumnType.CATEGORICAL:
+                fill = dataset[column.name].mode()[0]
             elif column.type == ColumnType.ORDINAL:
                 fill = dataset[column.name].mode()[0]
             else:
@@ -255,7 +267,10 @@ class DatasetTransformer(Transfomer):
             json.dump(normalizer_meta.model_dump(mode="json"), f)
 
         return DatasetTransformer(
-            normalizer_meta, minmax_transformer, onehot_transformer, ordinal_transformer
+            normalizer_meta,
+            minmax_transformer,
+            onehot_transformer,
+            ordinal_transformer,
         )
 
     @staticmethod
@@ -277,7 +292,10 @@ class DatasetTransformer(Transfomer):
         meta = DatasetTransformerMetadata.load_json(path)
 
         return DatasetTransformer(
-            meta, minmax_transformer, onehot_transformer, ordinal_transformer
+            meta,
+            minmax_transformer,
+            onehot_transformer,
+            ordinal_transformer,
         )
 
     @property
@@ -308,9 +326,6 @@ class DatasetTransformer(Transfomer):
             categorical_data_transformed
         ).join(ordinal_data_transformed)
 
-        columns = self.transform_columns(self._meta.dataset.column_names)
-        dataset_transformed = dataset_transformed[columns]
-
         return dataset_transformed
 
     def inverse_transform(self, dataset: pd.DataFrame) -> pd.DataFrame:
@@ -339,7 +354,7 @@ class DatasetTransformer(Transfomer):
 
     @override
     def transform_column(self, column: str) -> list[str]:
-        try:
+        # try:
             return self._onehot_transformer.transform_column(column)
-        except Exception:
-            return [column]
+        # except Exception:
+        #     return [column]

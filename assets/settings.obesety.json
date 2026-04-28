@@ -1,0 +1,86 @@
+{
+  "random_seed": 42,
+  "dataset": {
+    "path": ["datasets"],
+    "file_name": "ObesityDataSet_raw_and_data_sinthetic.csv",
+    "delimiter": ",",
+    "columns": [
+      {
+        "name": "Gender",
+        "type": "categorical"
+      },
+      {
+        "name": "Age",
+        "type": "numeric"
+      },
+      {
+        "name": "Height",
+        "type": "numeric"
+      },
+      {
+        "name": "Weight",
+        "type": "numeric"
+      },
+      {
+        "name": "family_history_with_overweight",
+        "type": "categorical"
+      },
+      {
+        "name": "FAVC",
+        "type": "categorical"
+      },
+      {
+        "name": "FCVC",
+        "type": "numeric"
+      },
+      {
+        "name": "NCP",
+        "type": "numeric"
+      },
+      {
+        "name": "CAEC",
+        "type": "ordinal"
+      },
+      {
+        "name": "SMOKE",
+        "type": "categorical"
+      },
+      {
+        "name": "CH2O",
+        "type": "numeric"
+      },
+      {
+        "name": "SCC",
+        "type": "categorical"
+      },
+      {
+        "name": "FAF",
+        "type": "numeric"
+      },
+      {
+        "name": "TUE",
+        "type": "numeric"
+      },
+      {
+        "name": "CALC",
+        "type": "ordinal"
+      },
+      {
+        "name": "MTRANS",
+        "type": "categorical"
+      },
+      {
+        "name": "NObeyesdad",
+        "type": "ordinal"
+      }
+    ]
+  },
+  "normalizer": {
+    "path": ["models"],
+    "file_name": "meta.json"
+  },
+  "clusterizer": {
+    "path": ["models"],
+    "file_name": "model.pkl"
+  }
+}
