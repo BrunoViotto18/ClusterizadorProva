@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 
-from dataset import DatasetNormalizer
+from dataset import DatasetTransformer
 from settings import AppSettings, ClusterizerSettings
 
 
@@ -21,7 +21,7 @@ def main(settings_path: str) -> None:
 
     cluster_model = load_cluster_model(settings.clusterizer)
 
-    normalizer = DatasetNormalizer.load(settings)
+    normalizer = DatasetTransformer.load(settings.normalizer.file_path)
 
     new_data = pd.DataFrame(
         [
@@ -47,7 +47,7 @@ def main(settings_path: str) -> None:
 
     print(new_data)
 
-    normalized_data = normalizer.transform(new_data)
+    normalized_data = normalizer.transform(new_data, settings)
 
     print(normalized_data)
 
@@ -57,12 +57,12 @@ def main(settings_path: str) -> None:
 
     predicted = pd.DataFrame(
         cluster_model.cluster_centers_[cluster_index],
-        columns=normalizer.normalized_columns,
+        columns=normalizer.transform_columns(settings.dataset.columns),
     )
 
     print(predicted)
 
-    natural_prediction = normalizer.inverse_transform(predicted)
+    natural_prediction = normalizer.inverse_transform(predicted, settings)
 
     print(natural_prediction)
 
