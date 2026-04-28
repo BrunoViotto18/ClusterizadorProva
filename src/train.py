@@ -16,7 +16,7 @@ def calculate_ideal_cluster_count(dataset: pd.DataFrame, random_seed: int):
     distortions = []
     K = range(1, dataset.shape[0])
     for k in K:
-        print(f"Measuring cluser {k}/{len(K)}")
+        print(f"Measuring cluster {k}/{len(K)}")
         cluster_model = KMeans(n_clusters=k, random_state=random_seed)
 
         cluster_model = cluster_model.fit(dataset)
