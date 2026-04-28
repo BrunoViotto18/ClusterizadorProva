@@ -154,6 +154,9 @@ class OneHotTransformer(Transfomer):
     def transform_column(self, column: str) -> list[str]:
         return [*self._scaler.get_feature_names_out()]
 
+    def transform_columns(self, columns: list[str]) -> list[str]:
+        return [*self._scaler.get_feature_names_out()]
+
 
 class OrdinalTransformer(Transfomer):
     def __init__(self, scaler: OrdinalEncoder):

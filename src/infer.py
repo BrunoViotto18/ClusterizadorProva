@@ -26,44 +26,51 @@ def main(settings_path: str) -> None:
     new_data = pd.DataFrame(
         [
             [
-                0.00632,
-                18.00,
-                2.310,
+                "Female",
+                21,
+                1.62,
+                64,
+                "yes",
+                "no",
+                2,
+                3,
+                "Sometimes",
+                "no",
+                2,
+                "no",
                 0,
-                0.5380,
-                6.5750,
-                65.20,
-                4.0900,
                 1,
-                296.0,
-                15.30,
-                396.90,
-                4.98,
-                24.00,
+                "no",
+                "Public_Transportation",
+                "Normal_Weight",
             ]
         ],
         columns=normalizer.original_columns,
     )
 
+    print("Novo dado")
     print(new_data)
 
     normalized_data = normalizer.transform(new_data)
 
+    print("Novo dado normalizado")
     print(normalized_data)
 
     cluster_index = cluster_model.predict(normalized_data)
 
-    print(f"Predicted cluster {cluster_index}")
+    print(f"Cluster predito {cluster_index}")
 
     predicted = pd.DataFrame(
         cluster_model.cluster_centers_[cluster_index],
         columns=normalizer.transformed_columns,
     )
 
+    print(f"Valores do cluster {cluster_index}")
     print(predicted)
 
     natural_prediction = normalizer.inverse_transform(predicted)
 
+    print(f"Valores do cluster naturalizados {cluster_index}")
     print(natural_prediction)
 
 

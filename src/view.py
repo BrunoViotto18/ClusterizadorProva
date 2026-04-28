@@ -27,12 +27,12 @@ def main(settings_path: str) -> None:
         columns=normalizer.transformed_columns,
     )
 
-    print("Centros normalizados")
+    print("Centros de cluster normalizados")
     print(normalized_centers)
 
     natural_centers = normalizer.inverse_transform(normalized_centers)
 
-    print("Centros naturais")
+    print("Centros de clusters naturalizados")
     print(natural_centers)
 
 
