@@ -5,46 +5,68 @@
     "path": ["datasets"],
     "file_name": "housing.csv",
     "delimiter": "\\s+",
-    "numeric_columns": [
-      "CRIM",
-      "ZN",
-      "INDUS",
-      "NOX",
-      "RM",
-      "AGE",
-      "DIS",
-      "TAX",
-      "PTRATIO",
-      "B",
-      "LSTAT",
-      "MEDV"
-    ],
-    "categorical_columns": [
-      "CHAS"
-    ],
-    "ordinal_columns": [
-      "RAD"
-    ],
     "columns": [
-      "CRIM",
-      "ZN",
-      "INDUS",
-      "CHAS",
-      "NOX",
-      "RM",
-      "AGE",
-      "DIS",
-      "RAD",
-      "TAX",
-      "PTRATIO",
-      "B",
-      "LSTAT",
-      "MEDV"
-  ]
+      {
+        "name": "CRIM",
+        "type": "numeric"
+      },
+      {
+        "name": "ZN",
+        "type": "numeric"
+      },
+      {
+        "name": "INDUS",
+        "type": "numeric"
+      },
+      {
+        "name": "CHAS",
+        "type": "categorical"
+      },
+      {
+        "name": "NOX",
+        "type": "numeric"
+      },
+      {
+        "name": "RM",
+        "type": "numeric"
+      },
+      {
+        "name": "AGE",
+        "type": "numeric"
+      },
+      {
+        "name": "DIS",
+        "type": "numeric"
+      },
+      {
+        "name": "RAD",
+        "type": "ordinal"
+      },
+      {
+        "name": "TAX",
+        "type": "numeric"
+      },
+      {
+        "name": "PTRATIO",
+        "type": "numeric"
+      },
+      {
+        "name": "B",
+        "type": "numeric"
+      },
+      {
+        "name": "LSTAT",
+        "type": "numeric"
+      },
+      {
+        "name": "MEDV",
+        "type": "numeric"
+      }
+    ]
   },
   "normalizer": {
     "path": ["models"],
-    "file_name": "normalizer.pkl"
+    "file_name": "meta.json"
   },
   "clusterizer": {
     "path": ["models"],

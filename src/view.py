@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 from sklearn.cluster import KMeans
 
-from dataset import DatasetTransformer
+from transformer import DatasetTransformer
 from settings import AppSettings, ClusterizerSettings
 
 
@@ -24,13 +24,13 @@ def main(settings_path: str) -> None:
 
     normalized_centers = pd.DataFrame(
         cluster_model.cluster_centers_,
-        columns=normalizer.transform_columns(settings.dataset.columns),
+        columns=normalizer.transformed_columns,
     )
 
     print("Centros normalizados")
     print(normalized_centers)
 
-    natural_centers = normalizer.inverse_transform(normalized_centers, settings)
+    natural_centers = normalizer.inverse_transform(normalized_centers)
 
     print("Centros naturais")
     print(natural_centers)

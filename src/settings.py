@@ -1,3 +1,4 @@
+from enum import Enum
 import json
 import os
 
@@ -25,10 +26,7 @@ class DatasetSettings(BaseModel):
     _path: list[str] = PrivateAttr(default=[])
     file_name: str
     delimiter: str
-    numeric_columns: list[str]
-    categorical_columns: list[str]
-    ordinal_columns: list[str]
-    columns: list[str]
+    columns: list[ColumnInfo]
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -42,6 +40,22 @@ class DatasetSettings(BaseModel):
     @property
     def file_path(self) -> str:
         return os.path.join(self.path, self.file_name)
+
+    @property
+    def numeric_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.NUMERIC]
+
+    @property
+    def categorical_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.CATEGORICAL]
+
+    @property
+    def ordinal_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.ORDINAL]
+
+    @property
+    def column_names(self):
+        return [x.name for x in self.columns]
 
 
 class NormalizerSettings(BaseModel):
@@ -78,3 +92,47 @@ class ClusterizerSettings(BaseModel):
     @property
     def file_path(self) -> str:
         return os.path.join(self.path, self.file_name)
+
+
+class ColumnInfo(BaseModel):
+    name: str
+    type: ColumnType
+
+
+class ColumnType(Enum):
+    NUMERIC = "numeric"
+    CATEGORICAL = "categorical"
+    ORDINAL = "ordinal"
+
+
+class DatasetTransformerMetadata(BaseModel):
+    dataset: DatasetMetadata
+
+    @staticmethod
+    def load_json(path: str) -> DatasetTransformerMetadata:
+        with open(path, "r") as f:
+            json_settings = json.load(f)
+
+        settings = DatasetTransformerMetadata.model_validate(json_settings)
+
+        return settings
+
+
+class DatasetMetadata(BaseModel):
+    columns: list[ColumnInfo]
+
+    @property
+    def numeric_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.NUMERIC]
+
+    @property
+    def categorical_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.CATEGORICAL]
+
+    @property
+    def ordinal_columns(self):
+        return [x.name for x in self.columns if x.type == ColumnType.ORDINAL]
+
+    @property
+    def column_names(self):
+        return [x.name for x in self.columns]

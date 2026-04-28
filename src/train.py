@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from dataset import DatasetTransformer, download_dataset
+from dataset import download_dataset
+from transformer import DatasetTransformer
 from scipy.spatial.distance import cdist
-from settings import AppSettings, DatasetSettings
+from settings import AppSettings, DatasetMetadata, DatasetSettings
 from sklearn.cluster import KMeans
 
 
@@ -77,11 +78,13 @@ def main(settings_path: str) -> None:
 
     dataset = download_dataset(settings.dataset)
 
+    meta = DatasetMetadata(columns=settings.dataset.columns)
+
     dataset_normalizer = DatasetTransformer.fit_save(
-        settings.normalizer.file_path, dataset, settings
+        settings.normalizer.file_path, dataset, meta
     )
 
-    dataset_transformed = dataset_normalizer.transform(dataset, settings)
+    dataset_transformed = dataset_normalizer.transform(dataset)
 
     ideal_cluster_count = calculate_ideal_cluster_count(
         dataset_transformed, settings.random_seed
