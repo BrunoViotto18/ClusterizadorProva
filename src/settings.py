@@ -97,6 +97,7 @@ class ClusterizerSettings(BaseModel):
 class ColumnInfo(BaseModel):
     name: str
     type: ColumnType
+    fill: float | None = None
 
 
 class ColumnType(Enum):

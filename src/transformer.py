@@ -6,6 +6,7 @@ import pickle
 from abc import ABC, abstractmethod
 
 from settings import (
+    ColumnType,
     DatasetMetadata,
     DatasetTransformerMetadata,
 )
@@ -214,6 +215,20 @@ class DatasetTransformer(Transfomer):
         if meta is None:
             raise ValueError("No dataset metada found")
 
+        for column in meta.columns:
+            fill: float
+            if column.type == ColumnType.NUMERIC:
+                fill = dataset[column.name].median()
+            elif column.type == ColumnType.CATEGORICAL:
+                fill = dataset[column.name].median()
+            elif column.type == ColumnType.ORDINAL:
+                fill = dataset[column.name].mode()[0]
+            else:
+                raise ValueError("Unknown column type")
+
+            dataset[column.name] = dataset[column.name].fillna(fill)
+            column.fill = fill
+
         parent_directory = os.path.dirname(path)
         os.makedirs(parent_directory, exist_ok=True)
 
@@ -274,6 +289,9 @@ class DatasetTransformer(Transfomer):
         return self.transform_columns(self.original_columns)
 
     def transform(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        for column in self._meta.dataset.columns:
+            dataset[column.name] = dataset[column.name].fillna(column.fill)
+
         numeric_data_transformed = self._minmax_transformer.transform(
             dataset[self._meta.dataset.numeric_columns]
         )
